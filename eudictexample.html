@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>我的生词本 | 欧路词典</title>
+
+    <script src="/Scripts/jquery.ubaplayer.js" defer="defer"></script>
+    <script src="/Content/plugins/datatables/media/js/jquery.dataTables.js" defer="defer"></script>
+    <script src="/Content/plugins/datatables/media/js/dataTables.bootstrap.js" defer="defer"></script>
+    <script src="/Scripts/nifty/tables-datatables.js" defer="defer"></script>
+
+
+    <link href="/bundles/commonCss?v=PM9GP3Gsfm_8fE-N2b4r5gK60M_FC01JR9bIjqHpI1Y1" rel="stylesheet"/>
+
+    <script src="/bundles/modernizr?v="></script>
+
+
+    <link href="/Content/nifty/nifty-demo-icons.min.css" rel="stylesheet">
+    <link href="/Content/nifty/nifty-demo.min.css" rel="stylesheet">
+
+    <link href="/Content/plugins/ionicons/css/ionicons.min.css" rel="stylesheet">
+
+
+
+
+</head>
+<body>
+
+    <div id="container" class="effect aside-float aside-bright mainnav-lg">
+        <header id="navbar">
+            <div id="navbar-container" class="boxed">
+                <input type="hidden"  name="name" value="" class="language_category flag-en" />
+                <div class="navbar-header">
+                    <a href="index.html" class="navbar-brand">
+                        <img src="img/logo.png" alt="Nifty Logo" style="display:none;width:28px;height:28px;margin-top:6px!important;margin-right:5px!important;" class="brand-icon">
+                        <div class="brand-title" style="display:none;">
+                            <span class="brand-text"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="navbar-content clearfix">
+                    <ul class="nav navbar-top-links pull-left">
+                        <li class="tgl-menu-btn">
+                            <a class="mainnav-toggle" href="#">
+                                <i class="demo-pli-view-list"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+    <i class="ion-home icon-lg lft"></i>
+    <ul class="pull-left">
+        <li style="float:left;"><a href="/home/index">首页</a></li>
+        <li style="float:left;"><i class="ion-chevron-right header_route_i"></i><a href="#">欧路词典</a></li>
+        <li style="float:left;" class="active"><i class="ion-chevron-right header_route_i"></i><a href="#">我的生词本</a></li>
+    </ul>
+
+                    <ul class="nav navbar-top-links pull-right">
+                        <li class="dropdown">
+                            <a id="demo-lang-switch" class="lang-selector dropdown-toggle text_c" href="#" data-toggle="dropdown">
+                                <span class="lang-selected">
+                                    <img class="lang-flag" style="margin-left:-5px;" src="/Content/img/en_logo.png" alt="English">
+                                </span>
+                                <span class="lang-name" style="display:inline-block;margin-left:12px;">欧路词典</span>
+                            </a>
+                            <ul class="head-list dropdown-menu">
+                                <li>
+                                    <a href="/account/changesitelanguage?langid=en" class="text_c">
+                                        <img class="lang-flag" src="/Content/img/en_logo.png" style="margin-right:10px;" alt="English">
+                                        <span class="lang-id">EN</span>
+                                        <span class="lang-name">欧路词典</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/account/changesitelanguage?langid=fr" class="text_c">
+                                        <img class="lang-flag" src="/Content/img/fr_logo.png" style="margin-right:10px;" alt="France">
+                                        <span class="lang-id">FR</span>
+                                        <span class="lang-name">法语助手</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/account/changesitelanguage?langid=de" class="text_c">
+                                        <img class="lang-flag" src="/Content/img/de_logo.png" style="margin-right:10px;" alt="Germany">
+                                        <span class="lang-id">DE</span>
+                                        <span class="lang-name">德语助手</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/account/changesitelanguage?langid=es" class="text_c">
+                                        <img class="lang-flag" src="/Content/img/es_logo.png" style="margin-right:10px;" alt="Spain">
+                                        <span class="lang-id">ES</span>
+                                        <span class="lang-name">西语助手</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <div class="boxed">
+            <div id="content-container">
+
+
+
+
+
+
+<div class="contain_main wpad-lft wpad-rgt" style="padding:0;">
+    <div id="soundPlayer"></div>
+    <div id="page-content">
+        <div class="row">
+            <div class="col-sm-3 col-md-3 col-lg-3 eq-box-lg word_group">
+                <div class="panel">
+                    <div class="list-group">
+                        <ul class="clear_margin">
+                            <li class="list-group-item list-item-lg media" style="height:60px;line-height:30px;overflow:visible;">
+                                <div class="media-body" style="overflow:visible;">
+                                    <div class="media-heading">
+
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+                                                生词本工具 <i class="dropdown-caret"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" style="left:0!important;">
+                                                <li><a href="#" class="addCate">添加分组</a></li>
+                                                <li><a href="/studylist/import/" target="_blank">导入生词本</a></li>
+                                                <li><a class="print_word" href="/studylist/print/" target="_blank">打印当前列表</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="selected list-group-item list-item-lg media book droppable all_cate" id="-1" style="margin-top:0px;height:60px;line-height:30px;">
+                                <div class="media-body">
+                                    <div class="media-heading">
+                                        <div class="li_html2">
+                                            <a class="media_heading_a new_cateitem_click"  data-id="-1">全部生词本</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item list-item-lg media media1 book droppable" id="0" style="margin-top:0px;height:60px;line-height:30px;">
+                                <div class="media-body">
+                                    <div class="media-heading">
+                                        <div class="li_html1">
+                                            <input style="display:inline-block;" data-val="" class="form-control edit_txt_cateName">
+                                            <span class="rgt cancelCate">&nbsp;取消</span>
+
+                                        </div>
+                                        <div class="li_html2">
+                                            <a class="media_heading_a new_cateitem_click"  data-id="0">default</a>
+                                            <p class="rgt edit_btn">
+                                                <a id="edit_0" class="editCateName" ><i class='ion-compose'></i>&nbsp;<span class="hidden_edit">编辑</span></a>
+                                                <a id="delete_0" class="delCateName" ><i class="ion-trash-a"></i>&nbsp;<span class="hidden_edit">删除</span></a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item list-item-lg media media1 book droppable" id="1509069027" style="margin-top:0px;height:60px;line-height:30px;">
+                                <div class="media-body">
+                                    <div class="media-heading">
+                                        <div class="li_html1">
+                                            <input style="display:inline-block;" data-val="" class="form-control edit_txt_cateName">
+                                            <span class="rgt cancelCate">&nbsp;取消</span>
+
+                                        </div>
+                                        <div class="li_html2">
+                                            <a class="media_heading_a new_cateitem_click"  data-id="1509069027">Coding</a>
+                                            <p class="rgt edit_btn">
+                                                <a id="edit_1509069027" class="editCateName" ><i class='ion-compose'></i>&nbsp;<span class="hidden_edit">编辑</span></a>
+                                                <a id="delete_1509069027" class="delCateName" ><i class="ion-trash-a"></i>&nbsp;<span class="hidden_edit">删除</span></a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+            </ul>
+        </div>
+                </div>
+            </div>
+            <div class="col-sm-9 col-md-9 col-lg-9 eq-box-lg">
+                 <div class="panel">
+                    <div class="panel-body">
+                        <table id="word_table_star" class="cs_table table table-striped table-bordered" cellspacing="0" width="100%" data-id="" data-name="">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" name="select_all" value="1" id="example-select-all"></th>
+                                    <th class="text_c">序号</th>
+                                    <th class="text_c">单词</th>
+                                    <th class="text_c">音标</th>
+                                    <th class="text_c">解释</th>
+                                    <th class="text_c">等级</th>
+                                    <th class="text_c">添加时间</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            </div>
+
+            <nav id="mainnav-container">
+                <div id="mainnav">
+                    <div id="mainnav-menu-wrap">
+                        <div class="nano">
+                            <div class="nano-content">
+
+
+<div id="mainnav-profile" class="mainnav-profile">
+    <div class="profile-wrap">
+        <div class="pad-btm">
+            <img class="img-circle img-sm img-border" src="https://fs-gateway.frhelper.com/store_user/avatar/Default" alt="Profile Picture">
+        </div>
+        <a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false">
+            <span class="pull-right dropdown-toggle">
+                <i class="dropdown-caret"></i>
+            </span>
+            <p class="mnp-name">MGC</p>
+            <span class="mnp-desc">megachweng@163.com</span>
+        </a>
+    </div>
+    <div id="profile-nav" class="collapse list-group bg-trans">
+        <a href="http://dict.eudic.net/Account/LogOff?returnUrl=https://my.eudic.net/studyList" class="list-group-item">
+            <i class="demo-pli-unlock icon-lg icon-fw"></i> 退出登录
+        </a>
+    </div>
+</div>
+
+                                <ul id="mainnav-menu" class="list-group">
+                                    <li class="list-header">个人信息</li>
+                                    <li class="list_index">
+                                        <a href="/">
+                                            <i class="ion-home nav-i icon-lg"></i>
+                                            <span class="menu-title">个人主页</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="list-divider"></li>
+                                    <li class="list-header">『每日英语听力』</li>
+                                    <li class="list_listen1">
+                                        <a href="/ting/index">
+                                            <i class="ion-headphone nav-i icon-lg"></i>
+                                            <span class="menu-title">我上传的听力</span>
+                                        </a>
+                                    </li>
+                                    <li class="list-divider"></li>
+                                    <li class="list-header">『欧路词典』</li>
+                                    <li class="list_word1">
+                                        <a href="/studyList">
+                                            <i class="ion-document-text nav-i icon-lg"></i>
+                                            <span class="menu-title">我的生词本</span>
+                                        </a>
+                                    </li>
+                                    <li class="list_word2">
+                                        <a href="/studylist/import/">
+                                            <i class="ion-archive nav-i icon-lg"></i>
+                                            <span class="menu-title">导入其他软件生词</span>
+                                        </a>
+                                    </li>
+                                    <li class="list_book1">
+                                        <a href="/recite/userbooks">
+                                            <i class="ion-folder nav-i icon-lg"></i>
+                                            <span class="menu-title">单词复习课本</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <footer id="footer">
+            <div class="show-fixed pull-right">
+                You have <a href="#" class="text-bold text-main"><span class="label label-danger">3</span> pending action.</a>
+            </div>
+            <div class="hide-fixed pull-right pad-rgt">
+                <a href="//http://dict.eudic.net">欧路软件</a> ©2017 <span></span>
+            </div>
+        </footer>
+        <button class="scroll-top btn">
+            <i class="pci-chevron chevron-up"></i>
+        </button>
+    </div>
+    <script src="/scripts/jquery.min.js"></script>
+
+
+    <script src="/bundles/bootstrap?v=D7EtrVEcJ8hl8zTYvnQ7VBctrzGk2aYpgyN8LN-KfPQ1"></script>
+
+    <script src="/bundles/commonJs?v=8GSdK7DMfsGNPBS_xRmC1nRDt-wOapSM3VoBRQlf2GY1"></script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

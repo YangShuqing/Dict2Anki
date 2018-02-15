@@ -18,23 +18,21 @@ class parseEudictGroup(HTMLParser):
     def __init__(self):
         HTMLParser.__init__(self)
         self.groupID = []
-
+        self.groupName= []
+        self.flag = 0
     def handle_starttag(self, tag, attrs):
         # retrive the terms
         if tag == 'a':
-            for attribute, value in attrs:
-                if attribute=='data-id':
-                    self.groupID.append(value)
+            if attrs[0][0] == 'class' and attrs[0][1] == 'media_heading_a new_cateitem_click':
+                self.flag = 1
+                self.groupID.append(attrs[1][1])
+    def handle_data(self,data):
+        if self.flag:
+            self.groupName.append(data)
+        self.flag = 0
 
-def __getGroups():
-    with open('eudictexample.html') as f:
-        html = f.read()
-        parser = parseEudictGroup()
-        parser.feed(html)
-        groupID = parser.groupID
-        print(groupID)
-        groupName = []
-        for id in groupID:
-            groupName += re.findall(r'data-id="{}">(.*?)</a>'.format(str(id)),html, re.I | re.M)
-        return dict(zip(groupID,groupName))
-print __getGroups()
+with open('eudictexample.html') as f:
+    html = f.read()
+    parser = parseEudictGroup()
+    parser.feed(html)
+    print(dict(zip(parser.groupID,parser.groupName)))

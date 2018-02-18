@@ -12,6 +12,8 @@ import pickle
 from HTMLParser import HTMLParser
 import traceback
 from PyQt4 import QtCore
+
+
 class Eudict(QtCore.QThread):
     def __init__(self):
         QtCore.QThread.__init__(self)
@@ -53,6 +55,17 @@ class Eudict(QtCore.QThread):
             return MozillaCookieJar
         else:
             return False
+
+    def getGroupList(self):
+            req = urllib2.Request("https://my.eudic.net/StudyList")
+            cookie = self.__loadCookies()
+            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookie))
+            urllib2.install_opener(opener)
+            response = urllib2.urlopen(req).read()
+            groupParser = parseEudictGroup()
+            groupParser.feed(response)
+            self.groupList = dict(zip(groupParser.groupID,groupParser.groupName))
+            return self.groupList
 
     def run(self):
         req = urllib2.Request("https://my.eudic.net/StudyList/WordsDataSource?length=100000000&categoryid=-1")
@@ -113,6 +126,17 @@ class Youdao(QtCore.QThread):
         else:
             return False
 
+    def getGroupList(self):
+        req = urllib2.Request("http://dict.youdao.com/wordbook/wordlist")
+        cookie = self.__loadCookies()
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookie))
+        urllib2.install_opener(opener)
+        response = urllib2.urlopen(req).read()
+        groupParser = parseYoudaoGroup()
+        groupParser.feed(response)
+        self.groupList = groupParser.groupName
+        return self.groupList
+
     def run(self):
         def totalPage():
             # page index start from 0 end at max-1
@@ -158,6 +182,43 @@ class parseYoudaoWordbook(HTMLParser):
                     self.terms.append(attrs[1][1])
 
 
+class parseYoudaoGroup(HTMLParser):
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.groupName= []
+        self.flag = 0
+    def handle_starttag(self, tag, attrs):
+        # retrive the terms
+        if tag == 'select':
+            if attrs[0][0] == 'id' and attrs[0][1] == 'select_category':
+                self.flag = 1
+        if self.flag:
+            if tag == 'option':
+                if attrs[0][0] == 'value' and attrs[0][1]:
+                    self.groupName.append(attrs[0][1])
+    def handle_endtag(self,tag):
+        if tag == 'select':
+            self.flag = 0
+
+
+class parseEudictGroup(HTMLParser):
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.groupID = []
+        self.groupName= []
+        self.flag = 0
+    def handle_starttag(self, tag, attrs):
+        # retrive the terms
+        if tag == 'a':
+            if attrs[0][0] == 'class' and attrs[0][1] == 'media_heading_a new_cateitem_click' and int(attrs[1][1]) >=0:
+                self.flag = 1
+                self.groupID.append(attrs[1][1])
+    def handle_data(self,data):
+        if self.flag:
+            self.groupName.append(data)
+        self.flag = 0
+
+
 class imageDownloader(QtCore.QThread):
     """thread that download images of terms"""
     def __init__(self,imageUrls):
@@ -171,6 +232,7 @@ class imageDownloader(QtCore.QThread):
             self.emit(QtCore.SIGNAL('update'),current+1,ti)
             self.emit(QtCore.SIGNAL('updateProgressBar_img(int,int)'),int(current+1),int(ti))
             self.emit(QtCore.SIGNAL('seek_img(QString)'),str('Getting image: ' + self.imageUrls[current][0]))
+
 
 class pronunciationDownloader(QtCore.QThread):
     def __init__(self,terms,ptype):
@@ -186,6 +248,7 @@ class pronunciationDownloader(QtCore.QThread):
             urllib.urlretrieve(self.soundAPI.format(self.terms[current],str(self.ptype)), "MG-" + self.terms[current] + '.mp3')
             self.emit(QtCore.SIGNAL('updateProgressBar_pron(int,int)'),int(current+1),int(tp))
             self.emit(QtCore.SIGNAL('seek_pron(QString)'),str('Getting pronunciation: ' + self.terms[current]))
+
 
 class Lookupper(QtCore.QThread):
     def __init__(self, wordList):

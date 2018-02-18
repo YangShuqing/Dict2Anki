@@ -18,6 +18,7 @@ from PyQt4 import QtCore, QtGui
 from PyQt4.QtGui import QWidget
 from Dict2Anki.worker import Eudict, Youdao, imageDownloader, pronunciationDownloader,Lookupper
 from Dict2Anki.note import Note
+from Dict2Anki.groupDialog import groupDialog
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -292,20 +293,39 @@ class Window(QWidget):
     def __startSync(self):
         #getLastWordList-> getCurrentWordList =-> compare -> lookup =-> getimage =-> getpronounce =-> processNote -> saveCurrentWordlist
         if askUser('Sync Now?'):
-            self.syncButton.setText('Wait...')
-            self.syncButton.setEnabled(False)
-            self.lastWordList = self.__getLastWordList()
-            self.currentWordList = self.__getCurrentWordList()
-            self.comparedWordList = self.__compare(self.lastWordList,self.currentWordList)
-            self.lookUpedTerms = self.__lookup(self.comparedWordList['new'])
-            self.__getAssets(self.lookUpedTerms)
-            self.__processNote(self.lookUpedTerms,self.comparedWordList['deleted'])
-            self.__saveWordList(self.currentWordList)
-            self.__saveSyncSettings()
-            self.syncButton.setText('Sync')
-            self.syncButton.setEnabled(True)
+            try:
+                self.__showGroupDialog()
 
-    def __getCurrentWordList(self):
+            except Exception,e:
+                self.seek(str(e))
+            # self.syncButton.setText('Wait...')
+            # self.syncButton.setEnabled(False)
+            # self.lastWordList = self.__getLastWordList()
+            # self.currentWordList = self.__getCurrentWordList()
+            # self.comparedWordList = self.__compare(self.lastWordList,self.currentWordList)
+            # self.lookUpedTerms = self.__lookup(self.comparedWordList['new'])
+            # self.__getAssets(self.lookUpedTerms)
+            # self.__processNote(self.lookUpedTerms,self.comparedWordList['deleted'])
+            # self.__saveWordList(self.currentWordList)
+            # self.__saveSyncSettings()
+            # self.syncButton.setText('Sync')
+            # self.syncButton.setEnabled(True)
+
+    def __showGroupDialog(self):
+        dialog = groupDialog()
+        if self.dictionary.currentIndex():
+            groupList = Youdao().getGroupList()
+            dialog.addYoudaoGroup(groupList)
+        else:
+            groupList = Eudict().getGroupList()
+            dialog.addEudictGroup(groupList)
+
+        dialog.show()
+        resp = dialog.exec_()
+        if resp:
+            return dialog.selectedGroups
+
+    def __getCurrentWordList(self,selectedGroup):
         if self.dictThread:
             self.dictThread.terminate()
 
